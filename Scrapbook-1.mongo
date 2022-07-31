@@ -1,0 +1,44 @@
+db.linkedon.count({
+  salary: {
+    $gt: 25000,
+  },
+});
+db.linkedon
+  .find(
+    {},
+    {
+      firstName: 1,
+      salary: 1,
+      _id: 0,
+    }
+  )
+  .sort({ salary: -1 })
+  .limit(3);
+
+db.linkedon.find({
+  $and: [{ "currentCompany.name": "Walmart" }, { salary: { $gte: 7000 } }],
+});
+db.linkedon
+  .find(
+    {
+      $or: [
+        { "currentCompany.industry": "Retail" },
+        { "currentCompany.industry": "Sales" },
+      ],
+    },
+    {
+      firstName: 1,
+      lastName: 1,
+      salary: 1,
+      "currentCompany.name": 1,
+    }
+  )
+  .sort({ salary: -1 })
+  .limit(1);
+db.linkedon.count({
+  $or: [
+    { "previousCompanies.name": "Apple" },
+    { "previousCompanies.name": "past " },
+    { "previousCompanies.name": "present" },
+  ],
+});
